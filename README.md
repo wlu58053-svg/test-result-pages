@@ -1,0 +1,43 @@
+[redirect.html](https://github.com/user-attachments/files/23157859/redirect.html)
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>跳转中...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // 定义跳转映射表
+        const typeToUrl = {
+            "讨好型内耗者": "https://wlu58053-svg.github.io/test-result-pages/1-讨好型.html",
+            "焦虑型掌控者": "https://wlu58053-svg.github.io/test-result-pages/2-焦虑型.html",
+            "压抑型崩溃者": "https://wlu58053-svg.github.io/test-result-pages/3-压抑型.html",
+            "无明显困扰者": "https://wlu58053-svg.github.io/test-result-pages/4-无明显困扰.html",
+            "多重倾向探索者": "https://wlu58053-svg.github.io/test-result-pages/5-多重倾向.html"
+        };
+
+        async function fetchLastRowAndRedirect() {
+            try {
+                // 替换为你的 Google Sheets Apps Script Web App URL（需公开访问权限）
+                const response = await fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec");
+                const data = await response.json();
+                const type = data.type;
+
+                if (typeToUrl[type]) {
+                    window.location.href = typeToUrl[type];
+                } else {
+                    document.getElementById("status").innerText = "识别失败，请联系客服或重试";
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById("status").innerText = "加载失败，请检查网络或联系管理员";
+            }
+        }
+
+        window.onload = fetchLastRowAndRedirect;
+    </script>
+</head>
+<body>
+    <h2 id="status">正在为你跳转到测评结果页面，请稍候...</h2>
+</body>
+</html>
